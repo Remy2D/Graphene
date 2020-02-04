@@ -25,14 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp \
-        graphenewindow.cpp
+    src/graphenewindow.cpp \
+    src/main.cpp
 
 HEADERS += \
-        graphenewindow.h
+    src/graphenewindow.h
 
 FORMS += \
-        graphenewindow.ui
+    src/graphenewindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
