@@ -1,7 +1,7 @@
 #include <iostream>
 #include "graphenewindow.h"
 #include "build-graphene-debug/ui_graphenewindow.h"
-#include "notelistmodel.h"
+#include "src/model/notelistmodel.h"
 #include <QStringListModel>
 #include <QtCore/QSortFilterProxyModel>
 

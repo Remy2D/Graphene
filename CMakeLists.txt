@@ -14,7 +14,7 @@ set(CMAKE_AUTORCC ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(SOURCE_FILES src/main.cpp src/graphenewindow.cpp src/graphenewindow.h src/model/note.h src/notelistmodel.h src/notelistmodel.cpp src/model/note.cpp)
+set(SOURCE_FILES src/main.cpp src/window/graphenewindow.cpp src/window/graphenewindow.h src/model/note.h src/model/notelistmodel.h src/model/notelistmodel.cpp src/model/note.cpp)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Sql REQUIRED)

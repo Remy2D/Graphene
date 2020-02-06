@@ -2,7 +2,7 @@
 #define GRAPHENEWINDOW_H
 
 #include <QMainWindow>
-#include "notelistmodel.h"
+#include "src/model/notelistmodel.h"
 
 namespace Ui {
     class GrapheneWindow;
@@ -20,12 +20,12 @@ private:
     Ui::GrapheneWindow *ui;
     NoteListModel *noteListModel;
 
-
     void setupSignalsSlots();
 
 private slots:
 
     void onDeleteButtonPressed();
+
     void onAddNoteButtonPressed();
 };
 

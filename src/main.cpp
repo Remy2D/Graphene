@@ -1,4 +1,4 @@
-#include "src/graphenewindow.h"
+#include "src/window/graphenewindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
