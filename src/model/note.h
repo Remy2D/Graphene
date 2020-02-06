@@ -41,10 +41,19 @@ public:
         Note::content = content;
     }
 
+    const QString &getTitle() const {
+        return title;
+    }
+
+    void setTitle(const QString &title) {
+        Note::title = title;
+    }
+
 private:
     QString id;
     QDateTime creationDate;
     QDateTime lastModifiedDate;
+    QString title;
     QString content;
 };
 

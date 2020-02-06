@@ -22,7 +22,8 @@ private:
 
 private slots:
 
-    void onSaveButtonPressed();
+    void onDeleteButtonPressed();
+    void onAddNoteButtonPressed();
 };
 
 #endif // GRAPHENEWINDOW_H
