@@ -3,6 +3,7 @@
 #include "build-graphene-debug/ui_graphenewindow.h"
 #include "notelistmodel.h"
 #include <QStringListModel>
+#include <QtCore/QSortFilterProxyModel>
 
 GrapheneWindow::GrapheneWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -12,7 +13,16 @@ GrapheneWindow::GrapheneWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // Create data:
-    noteListModel = new NoteListModel();
+    noteListModel = new NoteListModel(ui->noteListView);
+    noteListModel->addNote(new Note(QString("test note")));
+
+    //todo: try working with sort model, sort by date as separate column?
+//    QSortFilterProxyModel* sortModel = new QSortFilterProxyModel(ui->noteListView);
+//    sortModel->setSourceModel(noteListModel);
+//    QMap<int, QVariant> dataValue;
+//    dataValue[Qt::UserRole] = QVariant::fromValue(noteListModel->getNote(0));
+//    noteListModel->setItemData(sortModel->index(0,0), dataValue);
+
     ui->noteListView->setModel(noteListModel);
 
     // Enable workspace:
@@ -25,21 +35,16 @@ GrapheneWindow::~GrapheneWindow() {
 }
 
 void GrapheneWindow::onDeleteButtonPressed() {
-    std::cout << "delete" << std::endl;
+    std::cout << "Deleting note" << std::endl;
 }
 
 void GrapheneWindow::onAddNoteButtonPressed() {
-    std::cout << "new note" << std::endl;
+    QString content = ui->textEdit->toPlainText();
 
-    Note *note = new Note();
-    this->noteListModel->addNote(note);
+    std::cout << "Inserting new note: " << content.toStdString() << std::endl;
 
-//    auto *model = new QStringListModel(this);
-//
-//    model->setStringList({ui->textEdit->toPlainText()});
-//
-//    ui->noteListView->setModel(model);
-////    ui->noteListView->model()->setData(model);
+    Note *note = new Note(content);
+    noteListModel->addNote(note);
 
     ui->textEdit->clear();
     ui->textEdit->setFocus();

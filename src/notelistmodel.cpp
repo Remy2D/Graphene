@@ -1,12 +1,22 @@
 #include "notelistmodel.h"
+#include <iostream>
 
-void NoteListModel::addNote(Note *note) {
-    noteList << note;
+NoteListModel::NoteListModel(QObject *parent) : QAbstractListModel(parent) {
+    NoteListModel::internalNoteList = {};
 }
 
-Note *NoteListModel::getNote(int &index) {
+QModelIndex NoteListModel::addNote(Note *note) {
+    int count = rowCount();
+    beginInsertRows(QModelIndex(), count, count);
+    internalNoteList << note;
+    endInsertRows();
+
+    return createIndex(count, 0);
+}
+
+Note *NoteListModel::getNote(int index) {
     if (index >= 0) {
-        return noteList.at(index);
+        return internalNoteList.at(index);
     } else {
         return Q_NULLPTR;
     }
@@ -21,22 +31,20 @@ void NoteListModel::setSelectedIndex(int &index) {
 }
 
 /// From QAbstractItemModel:
-QModelIndex NoteListModel::index(int row, int column, const QModelIndex &parent) const {
-    return QModelIndex();
-}
-
-QModelIndex NoteListModel::parent(const QModelIndex &child) const {
-    return QModelIndex();
-}
-
 int NoteListModel::rowCount(const QModelIndex &parent) const {
-    return noteList.length();
-}
+    Q_UNUSED(parent)
 
-int NoteListModel::columnCount(const QModelIndex &parent) const {
-    return 1;
+    return internalNoteList.length();
 }
 
 QVariant NoteListModel::data(const QModelIndex &index, int role) const {
+    if (index.row() < 0 || index.row() >= internalNoteList.count()) {
+        return QVariant();
+    }
+
+    if (role == Qt::DisplayRole) {
+        return internalNoteList.at(index.row())->getContent();
+    }
+
     return QVariant();
 }

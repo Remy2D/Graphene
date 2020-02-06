@@ -4,34 +4,27 @@
 #include <QtCore/QAbstractItemModel>
 #include <src/model/note.h>
 
-class NoteListModel : public QAbstractItemModel {
+class NoteListModel : public QAbstractListModel {
 
 public:
-    NoteListModel() = default;
+    NoteListModel(QObject *parent);
 
-    ~NoteListModel() = default;
+    QModelIndex addNote(Note *note);
 
-    void addNote(Note *note);
-
-    Note *getNote(int &index);
+    Note *getNote(int index);
 
     void setSelectedIndex(int &index);
 
     int &getSelectedIndex();
 
-    QModelIndex index(int row, int column, const QModelIndex &parent) const override;
+    /// From QAbstractItemModel:
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
-    QModelIndex parent(const QModelIndex &child) const override;
-
-    int rowCount(const QModelIndex &parent) const override;
-
-    int columnCount(const QModelIndex &parent) const override;
-
-    QVariant data(const QModelIndex &index, int role) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
 private:
-    QList<Note *> noteList;
-    int selectedIndex;
+    QList<Note *> internalNoteList;
+    int selectedIndex = 0;
 };
 
 #endif //GRAPHENE_NOTELISTMODEL_H

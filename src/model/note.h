@@ -7,7 +7,7 @@
 class Note : public QObject {
 
 public:
-    Note();
+    explicit Note(const QString &content);
 
     const QString &getId() const {
         return id;
@@ -41,19 +41,10 @@ public:
         Note::content = content;
     }
 
-    const QString &getTitle() const {
-        return title;
-    }
-
-    void setTitle(const QString &title) {
-        Note::title = title;
-    }
-
 private:
     QString id;
     QDateTime creationDate;
     QDateTime lastModifiedDate;
-    QString title;
     QString content;
 };
 
