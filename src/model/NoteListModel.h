@@ -1,8 +1,8 @@
-#ifndef GRAPHENE_NOTELISTMODEL_H
-#define GRAPHENE_NOTELISTMODEL_H
+#ifndef GRAPHENE_NOTE_LIST_MODEL_H
+#define GRAPHENE_NOTE_LIST_MODEL_H
 
+#include "Note.h"
 #include <QtCore/QAbstractItemModel>
-#include <src/model/note.h>
 
 class NoteListModel : public QAbstractListModel {
 
@@ -11,9 +11,11 @@ public:
 
     QModelIndex addNote(Note *note);
 
+    void deleteNote(int index);
+
     Note *getNote(int index);
 
-    void setSelectedIndex(int &index);
+    void setSelectedIndex(int index);
 
     int &getSelectedIndex();
 
@@ -27,4 +29,4 @@ private:
     int selectedIndex = 0;
 };
 
-#endif //GRAPHENE_NOTELISTMODEL_H
+#endif  // GRAPHENE_NOTE_LIST_MODEL_H

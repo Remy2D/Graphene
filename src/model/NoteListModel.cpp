@@ -1,5 +1,4 @@
-#include "notelistmodel.h"
-#include <iostream>
+#include "NoteListModel.h"
 
 NoteListModel::NoteListModel(QObject *parent) : QAbstractListModel(parent) {
     NoteListModel::internalNoteList = {};
@@ -14,6 +13,12 @@ QModelIndex NoteListModel::addNote(Note *note) {
     return createIndex(count, 0);
 }
 
+void NoteListModel::deleteNote(int index) {
+    beginRemoveRows(QModelIndex(), index, index);
+    internalNoteList.removeAt(index);
+    endRemoveRows();
+}
+
 Note *NoteListModel::getNote(int index) {
     if (index >= 0) {
         return internalNoteList.at(index);
@@ -26,7 +31,7 @@ int &NoteListModel::getSelectedIndex() {
     return selectedIndex;
 }
 
-void NoteListModel::setSelectedIndex(int &index) {
+void NoteListModel::setSelectedIndex(int index) {
     selectedIndex = index;
 }
 
@@ -43,7 +48,7 @@ QVariant NoteListModel::data(const QModelIndex &index, int role) const {
     }
 
     if (role == Qt::DisplayRole) {
-        return internalNoteList.at(index.row())->getContent();
+        return internalNoteList.at(index.row())->getDigest();
     }
 
     return QVariant();

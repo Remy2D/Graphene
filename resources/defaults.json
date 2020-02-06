@@ -1,0 +1,9 @@
+{
+  "log": {
+    "filePath": "~/.graphene/application.log",
+    "loggingLevel": "DEBUG"
+  },
+  "ui": {
+    "fontSize": "20"
+  }
+}

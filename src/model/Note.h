@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QObject>
+#include <boost/algorithm/string.hpp>
 
 class Note : public QObject {
 
@@ -13,32 +14,40 @@ public:
         return id;
     }
 
-    void setId(const QString &id) {
-        Note::id = id;
+    void setId(const QString &_id) {
+        id = _id;
     }
 
     const QDateTime &getCreationDate() const {
         return creationDate;
     }
 
-    void setCreationDate(const QDateTime &creationDate) {
-        Note::creationDate = creationDate;
+    void setCreationDate(const QDateTime &newCreationDate) {
+        creationDate = newCreationDate;
     }
 
     const QDateTime &getLastModifiedDate() const {
         return lastModifiedDate;
     }
 
-    void setLastModifiedDate(const QDateTime &lastModifiedDate) {
-        Note::lastModifiedDate = lastModifiedDate;
+    void setLastModifiedDate(const QDateTime &newModifiedDate) {
+        lastModifiedDate = newModifiedDate;
     }
 
     const QString &getContent() const {
         return content;
     }
 
-    void setContent(const QString &content) {
-        Note::content = content;
+    const QString &getDigest() const {
+        return digest;
+    }
+
+    void setContent(const QString &newContent) {
+        content = newContent;
+    }
+
+    void setDigest(const QString &newDigest) {
+        digest = newDigest;
     }
 
 private:
@@ -46,6 +55,7 @@ private:
     QDateTime creationDate;
     QDateTime lastModifiedDate;
     QString content;
+    QString digest;
 };
 
 #endif //GRAPHENE_NOTE_H
