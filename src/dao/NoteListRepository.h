@@ -9,7 +9,7 @@ class NoteListRepository {
 public:
     NoteListRepository();
 
-    std::list<Note *> fetchNoteList();
+    std::list<Note> fetchNoteList();
 
 private:
     QString fakeNote;

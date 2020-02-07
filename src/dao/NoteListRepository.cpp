@@ -1,8 +1,8 @@
 #include "NoteListRepository.h"
 
-std::list<Note *> dao::NoteListRepository::fetchNoteList() {
-    auto note = new Note(fakeNote);
-    note->setDigest("abc");
+std::list<Note> dao::NoteListRepository::fetchNoteList() {
+    Note note(fakeNote);
+    note.digest = "abc";
     return {note};
 }
 

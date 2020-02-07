@@ -36,7 +36,6 @@ void GrapheneTextEdit::mouseMoveEvent(QMouseEvent *event) {
     if (obj) {
         obj->onMouseMoved(tc);
     } else {
-        LOG_DEBUG("No special items under cursor");
         QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
     }
 

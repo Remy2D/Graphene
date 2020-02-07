@@ -8,7 +8,7 @@ void NoteListManager::loadNote(int newIndex) {
     noteListModel->setSelectedIndex(newIndex);
 
     textEdit->clear();
-    textEdit->setText(noteListModel->getNote(newIndex)->getContent());
+    textEdit->setText(noteListModel->getNote(newIndex).content);
 
     noteListView->repaint();
     textEdit->repaint();
@@ -16,15 +16,15 @@ void NoteListManager::loadNote(int newIndex) {
 }
 
 void NoteListManager::saveNote(int oldIndex) {
-    auto oldNote = noteListModel->getNote(oldIndex);
+    auto& oldNote = noteListModel->getNote(oldIndex);
 
     // todo: move digest:
     auto oldNoteDigest = textEdit->toPlainText();
     oldNoteDigest = oldNoteDigest.simplified();
     oldNoteDigest.truncate(20);
 
-    oldNote->setContent(textEdit->toHtml());
-    oldNote->setDigest(oldNoteDigest);
+    oldNote.content = textEdit->toHtml();
+    oldNote.digest = oldNoteDigest;
 
 //    textEdit->clear();
     noteListView->repaint();

@@ -58,9 +58,11 @@ void GrapheneWindow::keyReleaseEvent(QKeyEvent *ev) {
 }
 
 void GrapheneWindow::onAddNoteButtonPressed() {
-    QString content = ui->textEdit->toPlainText();
+//    QString content = ui->textEdit->toPlainText();
+    //saveCurrent
+    //switch to new at the end
 
-    Note *note = new Note(content);
+    Note note("");
     noteListModel->addNote(note);
 
     ui->textEdit->clear();
