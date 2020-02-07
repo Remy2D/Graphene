@@ -4,7 +4,6 @@
 #include "src/dao/NoteListRepository.h"
 #include "src/model/NoteListModel.h"
 #include "src/window/NoteListManager.h"
-#include "src/window/TextEditManager.h"
 
 #include <QKeyEvent>
 #include <QMainWindow>
@@ -46,7 +45,6 @@ public:
 
 private:
     Ui_GrapheneWindow *ui;
-//    Ui::graphenewindow *ui;
     NoteListModel *noteListModel;
     NoteListManager *noteListManager;
     dao::NoteListRepository noteListRepository;

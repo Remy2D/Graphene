@@ -20,9 +20,10 @@ void GrapheneTextEdit::mousePressEvent(QMouseEvent *event) {
 
     if (obj) {
         obj->onMousePressed(tc);
+    } else {
+        QTextEdit::mousePressEvent(event);
     }
 
-    QTextEdit::mousePressEvent(event);
 }
 
 void GrapheneTextEdit::mouseMoveEvent(QMouseEvent *event) {

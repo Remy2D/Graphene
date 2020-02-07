@@ -43,8 +43,6 @@ set(SOURCE_FILES
     src/window/graphenewindow.h
     src/window/NoteListManager.h
     src/window/NoteListManager.cpp
-    src/window/TextEditManager.h
-    src/window/TextEditManager.cpp
 )
 
 set(Boost_ROOT_DIR "/home/remy/workspace/pko/lib-boost")
