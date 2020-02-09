@@ -5,6 +5,7 @@
 
 #include "GrapheneTextEdit.h"
 #include "common/Logger.h"
+#include "timer/SaveEventHandler.h"
 
 GrapheneTextEdit::GrapheneTextEdit(QWidget *parent) : QTextEdit(parent) {
     setMouseTracking(true);
@@ -20,6 +21,7 @@ void GrapheneTextEdit::mousePressEvent(QMouseEvent *event) {
 
     if (obj) {
         obj->onMousePressed(tc);
+        saveEventHandler->rescheduleSaveEvent();
     } else {
         QTextEdit::mousePressEvent(event);
     }
@@ -59,8 +61,11 @@ void GrapheneTextEdit::insertCheckedListNode() {
     setFocus();
 }
 
+void GrapheneTextEdit::setSaveEventHandler(timer::SaveEventHandler* eventHandler) {
+    saveEventHandler = eventHandler;
+}
+
 void CheckedListNode::onMouseMoved(QTextCursor &tc) {
-    LOG_DEBUG("Hoovering over item: " << itemName());
     QApplication::setOverrideCursor(QCursor(Qt::PointingHandCursor));
 }
 

@@ -9,7 +9,7 @@ class NoteListModel : public QAbstractListModel {
 public:
     explicit NoteListModel(QObject *parent);
 
-    QModelIndex addNote(Note &note);
+    int addNote(Note &note);
 
     void deleteNote(int index);
 

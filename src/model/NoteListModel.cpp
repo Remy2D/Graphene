@@ -3,13 +3,13 @@
 NoteListModel::NoteListModel(QObject *parent) : QAbstractListModel(parent) {
 }
 
-QModelIndex NoteListModel::addNote(Note &note) {
+int NoteListModel::addNote(Note &note) {
     int count = rowCount();
     beginInsertRows(QModelIndex(), count, count);
-    internalNoteList << note;
+    internalNoteList.append(note);
     endInsertRows();
 
-    return createIndex(count, 0);
+    return count;
 }
 
 void NoteListModel::deleteNote(int index) {

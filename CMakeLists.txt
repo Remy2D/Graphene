@@ -36,8 +36,8 @@ set(SOURCE_FILES
     src/text/HackishAsFuckHtmlFormatter.h
     src/text/HackishAsFuckHtmlFormatter.cpp
 
-    src/timer/TimerService.cpp
-    src/timer/TimerService.h
+    src/timer/SaveEventHandler.cpp
+    src/timer/SaveEventHandler.h
 
     src/window/graphenewindow.cpp
     src/window/graphenewindow.h

@@ -1,11 +1,18 @@
-#pragma once
+#ifndef GRAPHENE_TEXT_EDIT_H
+#define GRAPHENE_TEXT_EDIT_H
+
+#include "HackishAsFuckHtmlFormatter.h"
 
 #include <QtWidgets/QTextEdit>
 #include <QtUiPlugin/QDesignerCustomWidgetInterface>
 #include <boost/optional.hpp>
 #include <memory>
-#include "HackishAsFuckHtmlFormatter.h"
 
+namespace timer {
+
+class SaveEventHandler;
+
+}
 //todo: separate file:
 class SpecialObject {
 public:
@@ -42,8 +49,13 @@ public:
 
     void insertCheckedListNode();
 
+    void setSaveEventHandler(timer::SaveEventHandler* saveEventHandler);
+
 private:
     std::unique_ptr<SpecialObject> findSpecialObjects(QString &cursor);
 
     text::HackishAsFuckHtmlFormatter hackishAsFuckHtmlFormatter;
+    timer::SaveEventHandler* saveEventHandler;
 };
+
+#endif  // GRAPHENE_TEXT_EDIT_H

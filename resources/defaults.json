@@ -1,4 +1,7 @@
 {
+  "general" : {
+    "autosaveDelaySeconds": 2
+  },
   "log": {
     "filePath": "~/.graphene/application.log",
     "loggingLevel": "DEBUG"

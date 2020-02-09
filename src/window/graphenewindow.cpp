@@ -1,9 +1,8 @@
 #include "graphenewindow.h"
 #include "build-graphene-debug/ui_graphenewindow.h"
-#include "src/model/NoteListModel.h"
 #include <QStringListModel>
 #include <QtGui/QTextDocumentFragment>
-#include <src/common/Logger.h>
+#include <common/Logger.h>
 
 GrapheneWindow::GrapheneWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -16,7 +15,6 @@ GrapheneWindow::GrapheneWindow(QWidget *parent) :
     noteListModel = new NoteListModel(ui->noteListView);
 
     ui->noteListView->setModel(noteListModel);
-
     noteListManager = new NoteListManager(noteListModel, ui->textEdit, ui->noteListView);
 
     for (auto note : noteListRepository.fetchNoteList()) {
@@ -25,6 +23,14 @@ GrapheneWindow::GrapheneWindow(QWidget *parent) :
 
     //todo: assure there is at least 1:
     noteListManager->loadNote(0);
+
+    //Timers:
+    saveEventHandler = new timer::SaveEventHandler(noteListManager);
+    ui->textEdit->setSaveEventHandler(saveEventHandler);
+
+    saveEventTimer = new QTimer();
+    connect(saveEventTimer, SIGNAL(timeout()), SLOT(autosave()));
+    saveEventTimer->start();
 
     // Enable workspace:
     ui->textEdit->setFocus();
@@ -35,11 +41,14 @@ GrapheneWindow::GrapheneWindow(QWidget *parent) :
 }
 
 GrapheneWindow::~GrapheneWindow() {
-    delete ui;
+    noteListManager->saveCurrentNote();
 
-    //todo: fire autosave in destructors:
+    saveEventTimer->stop();
+    delete saveEventTimer;
+    delete saveEventHandler;
     delete noteListModel;
     delete noteListManager;
+    delete ui;
 }
 
 void GrapheneWindow::onDeleteButtonPressed() {
@@ -49,7 +58,7 @@ void GrapheneWindow::onDeleteButtonPressed() {
 }
 
 void GrapheneWindow::keyReleaseEvent(QKeyEvent *ev) {
-    noteListManager->saveNote(noteListModel->getSelectedIndex());
+    saveEventHandler->rescheduleSaveEvent();
 
     //todo: check letters, numbers, printables in general; backspaces
     //launch timer
@@ -58,12 +67,11 @@ void GrapheneWindow::keyReleaseEvent(QKeyEvent *ev) {
 }
 
 void GrapheneWindow::onAddNoteButtonPressed() {
-//    QString content = ui->textEdit->toPlainText();
-    //saveCurrent
-    //switch to new at the end
-
+    //todo: switch note -> move somewhere
     Note note("");
-    noteListModel->addNote(note);
+    noteListManager->saveNote(noteListModel->getSelectedIndex());
+    auto newIndex = noteListModel->addNote(note);
+    noteListManager->loadNote(newIndex);
 
     ui->textEdit->clear();
     ui->textEdit->setFocus();
@@ -72,6 +80,7 @@ void GrapheneWindow::onAddNoteButtonPressed() {
 
 void GrapheneWindow::onCheckListButtonPressed() {
     ui->textEdit->insertCheckedListNode();
+    saveEventHandler->rescheduleSaveEvent();
 }
 
 void GrapheneWindow::onViewNoteSelected(const QModelIndex &index) {
@@ -91,4 +100,8 @@ void GrapheneWindow::setupSignalsSlots() {
 
     connect(ui->checkListButton, &QPushButton::pressed, this,
             &GrapheneWindow::onCheckListButtonPressed);
+}
+
+void GrapheneWindow::autosave() {
+    saveEventHandler->autosave();
 }

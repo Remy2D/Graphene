@@ -1,9 +1,9 @@
 #ifndef GRAPHENEWINDOW_H
 #define GRAPHENEWINDOW_H
 
-#include "src/dao/NoteListRepository.h"
-#include "src/model/NoteListModel.h"
-#include "src/window/NoteListManager.h"
+#include "dao/NoteListRepository.h"
+#include "NoteListManager.h"
+#include "timer/SaveEventHandler.h"
 
 #include <QKeyEvent>
 #include <QMainWindow>
@@ -44,9 +44,12 @@ public:
     ~GrapheneWindow() override;
 
 private:
+    //todo: deletes:
     Ui_GrapheneWindow *ui;
+    QTimer* saveEventTimer;
     NoteListModel *noteListModel;
     NoteListManager *noteListManager;
+    timer::SaveEventHandler* saveEventHandler;
     dao::NoteListRepository noteListRepository;
 
     void setupSignalsSlots();
@@ -63,6 +66,7 @@ private slots:
 
     void onViewNoteSelected(const QModelIndex &index);
 
+    void autosave();
 };
 
 #endif  // GRAPHENEWINDOW_H
