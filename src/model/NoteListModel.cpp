@@ -5,7 +5,7 @@ NoteListModel::NoteListModel(QObject *parent) : QAbstractListModel(parent) {
 
 int NoteListModel::addNote(Note &note) {
     int count = rowCount();
-    beginInsertRows(QModelIndex(), count, count);
+    beginInsertRows(QModelIndex(), internalNoteList.length(), internalNoteList.length());
     internalNoteList.append(note);
     endInsertRows();
 
@@ -13,7 +13,7 @@ int NoteListModel::addNote(Note &note) {
 }
 
 void NoteListModel::deleteNote(int index) {
-    beginRemoveRows(QModelIndex(), index, index);
+    beginRemoveRows(QModelIndex(), internalNoteList.length(), internalNoteList.length());
     internalNoteList.removeAt(index);
     selectedIndex = 0;
     endRemoveRows();
@@ -48,4 +48,10 @@ QVariant NoteListModel::data(const QModelIndex &index, int role) const {
     }
 
     return QVariant();
+}
+
+void NoteListModel::resetModel() {
+    // todo: this emits a signal to QListView, find a better way to do this
+    beginInsertRows(QModelIndex(), internalNoteList.length(), internalNoteList.length());
+    endInsertRows();
 }

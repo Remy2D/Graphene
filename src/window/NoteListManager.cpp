@@ -26,8 +26,7 @@ void NoteListManager::saveNote(int oldIndex) {
     oldNote.content = textEdit->toHtml();
     oldNote.digest = oldNoteDigest;
 
-    noteListView->repaint();
-    textEdit->repaint();
+    noteListModel->resetModel();
 
     LOG_DEBUG("Saved note " << oldIndex);
 }
