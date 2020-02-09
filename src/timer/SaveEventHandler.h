@@ -21,7 +21,7 @@ public:
 private:
     bool scheduled = false;
     std::chrono::time_point<std::chrono::steady_clock> scheduledTime;
-    std::chrono::seconds delaySeconds;
+    std::chrono::milliseconds delaySeconds;
 
     NoteListManager *noteListManager;
 };

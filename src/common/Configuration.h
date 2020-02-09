@@ -8,7 +8,7 @@
 namespace config {
 
 enum PropertyKey {
-    AUTOSAVE_DELAY_SECONDS,
+    AUTOSAVE_DELAY_MILLISECONDS,
     LOG_FILE_PATH,
     LOG_LEVEL,
     UI_FONT_SIZE

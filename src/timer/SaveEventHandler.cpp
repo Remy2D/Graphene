@@ -7,8 +7,8 @@ using Clock = std::chrono::steady_clock;
 
 timer::SaveEventHandler::SaveEventHandler(NoteListManager* noteListManager) :
     noteListManager(noteListManager),
-    delaySeconds(std::chrono::seconds(
-            getConfiguration().getInt(config::PropertyKey::AUTOSAVE_DELAY_SECONDS))) {
+    delaySeconds(std::chrono::milliseconds(
+            getConfiguration().getInt(config::PropertyKey::AUTOSAVE_DELAY_MILLISECONDS))) {
 }
 
 void timer::SaveEventHandler::rescheduleSaveEvent() {

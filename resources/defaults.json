@@ -1,6 +1,6 @@
 {
   "general" : {
-    "autosaveDelaySeconds": 2
+    "autosaveDelayMilliseconds": 500
   },
   "log": {
     "filePath": "~/.graphene/application.log",

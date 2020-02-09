@@ -23,8 +23,8 @@ int config::Configuration::getInt(config::PropertyKey key) {
 
 std::string config::Configuration::resolvePropertyKey(config::PropertyKey key) {
     switch (key) {
-        case AUTOSAVE_DELAY_SECONDS:
-            return "general.autosaveDelaySeconds";
+        case AUTOSAVE_DELAY_MILLISECONDS:
+            return "general.autosaveDelayMilliseconds";
         case LOG_FILE_PATH:
             return "log.filePath";
         case LOG_LEVEL:
