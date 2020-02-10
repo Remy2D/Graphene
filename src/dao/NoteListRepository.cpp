@@ -1,8 +1,7 @@
 #include "NoteListRepository.h"
 
 std::list<Note> dao::NoteListRepository::fetchNoteList() {
-    Note note(fakeNote);
-    note.digest = "abc";
+    Note note(fakeNote, "Lista rzeczy do zrobienia:");
     return {note};
 }
 

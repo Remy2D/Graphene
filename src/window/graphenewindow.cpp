@@ -66,7 +66,7 @@ void GrapheneWindow::keyReleaseEvent(QKeyEvent *ev) {
 
 void GrapheneWindow::onAddNoteButtonPressed() {
     //todo: switch note -> move somewhere
-    Note note("");
+    Note note;
     noteListManager->saveNote(noteListModel->getSelectedIndex());
     auto newIndex = noteListModel->addNote(note);
     noteListManager->loadNote(newIndex);

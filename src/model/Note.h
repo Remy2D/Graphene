@@ -7,7 +7,10 @@
 
 struct Note {
 
-    explicit Note(const QString &content);
+    Note();
+    explicit Note(const QString &html, const QString &plainText);
+
+    void update(const QString &html, const QString &plainText);
 
     QString id;
     QDateTime creationDate;

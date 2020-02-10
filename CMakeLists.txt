@@ -41,6 +41,8 @@ set(SOURCE_FILES
 
     src/utils/NoteListManager.h
     src/utils/NoteListManager.cpp
+    src/utils/Digest.h
+    src/utils/Digest.cpp
 
     src/window/graphenewindow.cpp
     src/window/graphenewindow.h

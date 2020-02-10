@@ -1,5 +1,6 @@
 #include "NoteListManager.h"
 #include "common/Logger.h"
+#include "utils/Digest.h"
 
 void NoteListManager::loadNote(int newIndex) {
     int currentIndex = noteListModel->getSelectedIndex();
@@ -18,14 +19,7 @@ void NoteListManager::loadNote(int newIndex) {
 void NoteListManager::saveNote(int oldIndex) {
     auto &oldNote = noteListModel->getNote(oldIndex);
 
-    // todo: move digest:
-    auto oldNoteDigest = textEdit->toPlainText();
-    oldNoteDigest = oldNoteDigest.simplified();
-    oldNoteDigest.truncate(20);
-
-    oldNote.content = textEdit->toHtml();
-    oldNote.digest = oldNoteDigest;
-
+    oldNote.update(textEdit->toHtml(), textEdit->toPlainText());
     noteListModel->resetModel();
 
     LOG_DEBUG("Saved note " << oldIndex);
@@ -57,7 +51,7 @@ void NoteListManager::deleteCurrentNote() {
         return;
     }
 
-    Note note("");
+    Note note;
     noteListModel->addNote(note);
     loadNote(0);
 
