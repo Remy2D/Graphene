@@ -15,7 +15,6 @@ int NoteListModel::addNote(Note &note) {
 void NoteListModel::deleteNote(int index) {
     beginRemoveRows(QModelIndex(), internalNoteList.length(), internalNoteList.length());
     internalNoteList.removeAt(index);
-    selectedIndex = 0;
     endRemoveRows();
 }
 
@@ -54,4 +53,8 @@ void NoteListModel::resetModel() {
     // todo: this emits a signal to QListView, find a better way to do this
     beginInsertRows(QModelIndex(), internalNoteList.length(), internalNoteList.length());
     endInsertRows();
+}
+
+bool NoteListModel::hasIndex(int index) {
+    return index >= 0 && index < rowCount();
 }

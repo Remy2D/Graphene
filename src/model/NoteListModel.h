@@ -21,6 +21,8 @@ public:
 
     void resetModel();
 
+    bool hasIndex(int index);
+
     /// From QAbstractItemModel:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 

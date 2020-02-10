@@ -12,6 +12,7 @@ public:
     void saveNote(int oldIndex);
     void saveCurrentNote();
     void loadNote(int newIndex);
+    void deleteCurrentNote();
 
 private:
     NoteListModel *noteListModel;

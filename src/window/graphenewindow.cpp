@@ -52,9 +52,7 @@ GrapheneWindow::~GrapheneWindow() {
 }
 
 void GrapheneWindow::onDeleteButtonPressed() {
-    LOG_DEBUG("Raw note html: \n" << ui->textEdit->toHtml().toStdString());
-//    noteListModel->deleteNote(noteListModel->getSelectedIndex());
-//    std::cout << "Deleted note" << std::endl;
+    noteListManager->deleteCurrentNote();
 }
 
 void GrapheneWindow::keyReleaseEvent(QKeyEvent *ev) {
