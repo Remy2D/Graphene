@@ -1,7 +1,7 @@
 #include "SaveEventHandler.h"
 #include "common/Logger.h"
 #include "common/Configuration.h"
-#include "window/NoteListManager.h"
+#include "src/utils/NoteListManager.h"
 
 using Clock = std::chrono::steady_clock;
 

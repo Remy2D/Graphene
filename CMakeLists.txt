@@ -39,10 +39,11 @@ set(SOURCE_FILES
     src/timer/SaveEventHandler.cpp
     src/timer/SaveEventHandler.h
 
+    src/utils/NoteListManager.h
+    src/utils/NoteListManager.cpp
+
     src/window/graphenewindow.cpp
     src/window/graphenewindow.h
-    src/window/NoteListManager.h
-    src/window/NoteListManager.cpp
 )
 
 set(Boost_ROOT_DIR "/home/remy/workspace/pko/lib-boost")

@@ -2,7 +2,7 @@
 #define GRAPHENEWINDOW_H
 
 #include "src/dao/NoteListRepository.h"
-#include "NoteListManager.h"
+#include "src/utils/NoteListManager.h"
 #include "src/timer/SaveEventHandler.h"
 
 #include <QKeyEvent>
