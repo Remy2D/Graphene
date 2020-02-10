@@ -11,17 +11,17 @@ void logger::Logger::log(const std::string &message, LogLevel level) {
     }
 }
 
-logger::Logger::Logger(std::string logLevel, std::string logFilePath) {
+logger::Logger::Logger(const std::string& logLevel) {
     loggingLevel = getLoggingLevel(logLevel);
 
-    createLogFile(logFilePath);
+    createLogFile();
 }
 
 logger::Logger::~Logger() {
     logFile.close();
 }
 
-logger::LogLevel logger::Logger::getLoggingLevel(std::string &logLevel) {
+logger::LogLevel logger::Logger::getLoggingLevel(const std::string &logLevel) {
     if ("INFO" == logLevel) {
         return logger::LogLevel::INFO;
     }
@@ -41,8 +41,8 @@ logger::LogLevel logger::Logger::getLoggingLevel(std::string &logLevel) {
     throw std::exception();
 }
 
-void logger::Logger::createLogFile(std::string &logFilePath) {
-    boost::replace_all(logFilePath, "~", getenv("HOME"));
+void logger::Logger::createLogFile() {
+    auto logFilePath = getConfiguration().getPath(config::PropertyKey::LOG_FILE_PATH);
     boost::filesystem::path path(logFilePath);
 
     boost::system::error_code ec;

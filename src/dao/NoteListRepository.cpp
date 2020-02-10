@@ -1,22 +1,115 @@
+#include "Bind.h"
 #include "NoteListRepository.h"
+#include "common/Configuration.h"
+#include "common/Logger.h"
+#include "NoteBuilder.h"
 
-std::list<Note> dao::NoteListRepository::fetchNoteList() {
-    Note note(fakeNote, "Lista rzeczy do zrobienia:");
-    return {note};
-}
+#include <iostream>
+#include <QString>
+#include <list>
+#include <boost/filesystem/operations.hpp>
 
 dao::NoteListRepository::NoteListRepository() {
-    fakeNote = QString::fromStdString(
-            R"(
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-<html><head><meta name="qrichtext" content="1" /><style type="text/css">
-p, li { white-space: pre-wrap; }
-</style></head><body style=" font-family:'Cantarell'; font-size:11pt; font-weight:400; font-style:normal;">
-<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Lista rzeczy do zrobienia:</p>
-<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
-<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="resources/images/unchecked.png" width="20" height="20" /> nowe grafiki</p>
-<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="resources/images/checked.png" width="20" height="20" /> checkedList</p>
-<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="resources/images/unchecked.png" width="20" height="20" /> zapis do bazy danych</p>
-<p style="-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p></body></html>)"
-     );
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    auto databasePath = getConfiguration().getPath(config::PropertyKey::DATABASE_FILE_PATH);
+
+    dbFileExists(databasePath);
+    dbConnected(databasePath);
+    dbInitialized();
+}
+
+void dao::NoteListRepository::dbFileExists(const std::string &databasePath) {
+    if (!boost::filesystem::exists(databasePath)) {
+        std::ofstream dbFile(databasePath);
+        dbFile.open(databasePath, std::ios::out);
+        dbFile.flush();
+        dbFile.close();
+    }
+}
+
+void dao::NoteListRepository::dbConnected(const std::string &databasePath) {
+    db.setDatabaseName(QString::fromStdString(databasePath));
+
+    if (db.open()) {
+        LOG_INFO("Connected to database");
+    } else {
+        LOG_ERROR("Unable to connect to database: " << databasePath);
+        throw std::exception();
+    }
+}
+
+void dao::NoteListRepository::dbInitialized() {
+    execute(R"(
+        CREATE TABLE IF NOT EXISTS notes (
+                          id UUID PRIMARY KEY,
+                          creation_date INTEGER NOT NULL,
+                          last_modified_date INTEGER NOT NULL,
+                          content TEXT,
+                          digest TEXT
+        );
+    )");
+}
+
+std::list<Note> dao::NoteListRepository::fetchNoteList() {
+    auto query = execute(R"(
+        SELECT * FROM notes;
+    )");
+
+    std::list<Note> list;
+    while (query.next()) {
+        list.push_back(buildNote(query));
+    }
+
+    return list;
+}
+
+void dao::NoteListRepository::updateNote(const Note &note) {
+    auto queryTemplate = QString::fromStdString(R"(
+    INSERT OR REPLACE INTO notes (
+            id,
+            creation_date,
+            last_modified_date,
+            content,
+            digest
+            ) VALUES ('%1', %2, %3, '%4', '%5');
+    )");
+
+    bind(queryTemplate, note.id);
+    bind(queryTemplate, note.creationDate);
+    bind(queryTemplate, note.lastModifiedDate);
+    bind(queryTemplate, note.content);
+    bind(queryTemplate, note.digest);
+
+    execute(queryTemplate);
+}
+
+void dao::NoteListRepository::deleteNote(const Note &note) {
+    auto queryTemplate = QString::fromStdString(R"(DELETE FROM notes WHERE id='%1')");
+
+    bind(queryTemplate, note.id);
+    execute(queryTemplate);
+}
+
+QSqlQuery dao::NoteListRepository::execute(const QString &statement) {
+    QSqlQuery query;
+
+    bool success = query.exec(statement);
+
+    if (success) {
+        auto a = query.result();
+        return query;
+    } else {
+        LOG_ERROR("Error executing query: " << statement.toStdString());
+        throw std::exception();
+    }
+}
+
+Note dao::NoteListRepository::buildNote(const QSqlQuery &query) {
+    NoteBuilder nb;
+    return nb.id(query.value("id"))
+            .creationDate(query.value("creation_date"))
+            .lastModifiedDate(query.value("last_modified_date"))
+            .content(query.value("content"))
+            .digest(query.value("digest"))
+            .build();
 }

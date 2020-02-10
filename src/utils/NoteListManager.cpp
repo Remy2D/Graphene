@@ -22,6 +22,7 @@ void NoteListManager::saveNote(int oldIndex) {
     oldNote.update(textEdit->toHtml(), textEdit->toPlainText());
     noteListModel->resetModel();
 
+    noteListRepository.updateNote(oldNote);
     LOG_DEBUG("Saved note " << oldIndex);
 }
 
@@ -31,13 +32,16 @@ void NoteListManager::saveCurrentNote() {
 
 NoteListManager::NoteListManager(NoteListModel *model,
                                  GrapheneTextEdit *textEdit,
-                                 QListView *noteListView) :
-        noteListModel(model), textEdit(textEdit), noteListView(noteListView) {
+                                 QListView *noteListView,
+                                 dao::NoteListRepository &noteListRepository) :
+        noteListModel(model), textEdit(textEdit), noteListView(noteListView),
+        noteListRepository(noteListRepository) {
 }
 
 void NoteListManager::deleteCurrentNote() {
     int currentIndex = noteListModel->getSelectedIndex();
 
+    noteListRepository.deleteNote(noteListModel->getNote(currentIndex));
     noteListModel->deleteNote(currentIndex);
     LOG_DEBUG("Deleted note " << currentIndex);
 

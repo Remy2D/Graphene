@@ -17,14 +17,14 @@ enum LogLevel {
 
 class Logger {
 public:
-    explicit Logger(std::string loggingLevel, std::string logFilePath);
+    explicit Logger(const std::string& loggingLevel);
     ~Logger();
 
     void log(const std::string &message, LogLevel level);
 
 private:
-    void createLogFile(std::string& logFilePath);
-    static LogLevel getLoggingLevel(std::string &logLevel);
+    void createLogFile();
+    static LogLevel getLoggingLevel(const std::string &logLevel);
 
     LogLevel loggingLevel;
     std::ofstream logFile;
@@ -32,8 +32,7 @@ private:
 
 inline logger::Logger &getLogger() {
     static logger::Logger logger(
-            getConfiguration().getString(config::PropertyKey::LOG_LEVEL),
-            getConfiguration().getString(config::PropertyKey::LOG_FILE_PATH)
+            getConfiguration().getString(config::PropertyKey::LOG_LEVEL)
     );
 
     return logger;

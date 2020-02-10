@@ -1,6 +1,7 @@
 #ifndef GRAPHENE_CONFIGURATION_H
 #define GRAPHENE_CONFIGURATION_H
 
+#include <QString>
 #include <string>
 #include <unordered_map>
 #include <boost/property_tree/ptree.hpp>
@@ -9,6 +10,7 @@ namespace config {
 
 enum PropertyKey {
     AUTOSAVE_DELAY_MILLISECONDS,
+    DATABASE_FILE_PATH,
     LOG_FILE_PATH,
     LOG_LEVEL,
     UI_FONT_SIZE
@@ -19,6 +21,7 @@ class Configuration {
 public:
     Configuration();
     std::string getString(PropertyKey key);
+    std::string getPath(PropertyKey key);
     int getInt(PropertyKey key);
 
 private:

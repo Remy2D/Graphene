@@ -23,6 +23,10 @@ set(SOURCE_FILES
     src/common/Logger.cpp
     src/common/Logger.h
 
+    src/dao/Bind.h
+    src/dao/Bind.cpp
+    src/dao/NoteBuilder.h
+    src/dao/NoteBuilder.cpp
     src/dao/NoteListRepository.h
     src/dao/NoteListRepository.cpp
 

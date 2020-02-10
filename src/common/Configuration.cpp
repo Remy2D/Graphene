@@ -1,8 +1,9 @@
 #include "Configuration.h"
 #include "Logger.h"
 
-#include <boost/property_tree/json_parser.hpp>
+#include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 config::Configuration::Configuration() {
     if (boost::filesystem::exists("~/.graphene/config.json")) {
@@ -25,6 +26,8 @@ std::string config::Configuration::resolvePropertyKey(config::PropertyKey key) {
     switch (key) {
         case AUTOSAVE_DELAY_MILLISECONDS:
             return "general.autosaveDelayMilliseconds";
+        case DATABASE_FILE_PATH:
+            return "general.databaseFilePath";
         case LOG_FILE_PATH:
             return "log.filePath";
         case LOG_LEVEL:
@@ -35,4 +38,8 @@ std::string config::Configuration::resolvePropertyKey(config::PropertyKey key) {
             LOG_ERROR("Wrong property key");
             throw std::exception();
     }
+}
+
+std::string config::Configuration::getPath(config::PropertyKey key) {
+    return boost::replace_all_copy(getString(key), "~", getenv("HOME"));
 }

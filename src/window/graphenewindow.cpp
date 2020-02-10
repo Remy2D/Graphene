@@ -2,7 +2,6 @@
 #include "build-graphene/ui_graphenewindow.h"
 #include <QStringListModel>
 #include <QtGui/QTextDocumentFragment>
-#include <common/Logger.h>
 
 GrapheneWindow::GrapheneWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -15,7 +14,8 @@ GrapheneWindow::GrapheneWindow(QWidget *parent) :
     noteListModel = new NoteListModel(ui->noteListView);
 
     ui->noteListView->setModel(noteListModel);
-    noteListManager = new NoteListManager(noteListModel, ui->textEdit, ui->noteListView);
+    noteListManager = new NoteListManager(noteListModel, ui->textEdit, ui->noteListView,
+                                          noteListRepository);
 
     for (auto note : noteListRepository.fetchNoteList()) {
         noteListModel->addNote(note);
@@ -59,9 +59,6 @@ void GrapheneWindow::keyReleaseEvent(QKeyEvent *ev) {
     saveEventHandler->rescheduleSaveEvent();
 
     //todo: check letters, numbers, printables in general; backspaces
-    //launch timer
-        //save
-        //update digest
 }
 
 void GrapheneWindow::onAddNoteButtonPressed() {

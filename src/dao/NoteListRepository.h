@@ -3,17 +3,33 @@
 
 #include "model/NoteListModel.h"
 
+#include <QtSql>
+
 namespace dao {
 
-class NoteListRepository {
-public:
-    NoteListRepository();
+    class NoteListRepository {
+    public:
+        NoteListRepository();
 
-    std::list<Note> fetchNoteList();
+        std::list<Note> fetchNoteList();
 
-private:
-    QString fakeNote;
-};
+        void updateNote(const Note &note);
+
+        void deleteNote(const Note &note);
+
+    private:
+        void dbFileExists(const std::string &databasePath);
+
+        void dbConnected(const std::string &databasePath);
+
+        void dbInitialized();
+
+        Note buildNote(const QSqlQuery &query);
+
+        QSqlQuery execute(const QString &statement);
+
+        QSqlDatabase db;
+    };
 
 }  // namespace dao
 
