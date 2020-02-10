@@ -1,5 +1,5 @@
 #include "graphenewindow.h"
-#include "build-graphene-debug/ui_graphenewindow.h"
+#include "build-graphene/ui_graphenewindow.h"
 #include <QStringListModel>
 #include <QtGui/QTextDocumentFragment>
 #include <common/Logger.h>
