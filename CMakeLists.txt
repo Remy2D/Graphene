@@ -25,6 +25,8 @@ set(SOURCE_FILES
 
     src/dao/Bind.h
     src/dao/Bind.cpp
+    src/dao/HtmlSerializer.h
+    src/dao/HtmlSerializer.cpp
     src/dao/NoteBuilder.h
     src/dao/NoteBuilder.cpp
     src/dao/NoteListRepository.h

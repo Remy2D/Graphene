@@ -9,7 +9,7 @@ void NoteListManager::loadNote(int newIndex) {
     noteListModel->setSelectedIndex(newIndex);
 
     textEdit->clear();
-    textEdit->setText(noteListModel->getNote(newIndex).content);
+    textEdit->setHtml(noteListModel->getNote(newIndex).content);
 
     noteListView->repaint();
     textEdit->repaint();

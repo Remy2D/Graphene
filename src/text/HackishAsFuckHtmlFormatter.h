@@ -21,7 +21,7 @@ private:
 
     const QString checkedListNodeFile = "checked.png";
     const QString uncheckedListNodeFile = "unchecked.png";
-    const std::string htmlImageTemplate = "<img src=\"resources/images/FILENAME\" height='FONTSIZE' width='FONTSIZE'/>";
+    const std::string htmlImageTemplate = "<img src='resources/images/FILENAME' height='FONTSIZE' width='FONTSIZE'/>";
     const QString spacer = "<br/>";
 };
 

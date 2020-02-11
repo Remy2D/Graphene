@@ -1,8 +1,8 @@
 #include "Bind.h"
-#include <boost/algorithm/string.hpp>
+#include "HtmlSerializer.h"
 
 void bind(QString &string, const QString &param) {
-    string = string.arg(QString::fromStdString(boost::replace_all_copy(param.toStdString(), "\'", "\'\'")));
+    string = string.arg(HtmlSerializer::serialize(param));
 }
 
 void bind(QString &string, const QDateTime &time) {

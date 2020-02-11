@@ -1,3 +1,4 @@
+#include "HtmlSerializer.h"
 #include "NoteBuilder.h"
 #include "model/Note.h"
 #include <QVariant>
@@ -19,12 +20,12 @@ NoteBuilder &NoteBuilder::lastModifiedDate(const QVariant& lastModifiedDate) {
 }
 
 NoteBuilder &NoteBuilder::content(const QVariant& content) {
-    note.content = QString::fromStdString(boost::replace_all_copy(content.toString().toStdString(), "\'\'", "\'"));
+    note.content = HtmlSerializer::deserialize(content.toString());
     return *this;
 }
 
 NoteBuilder &NoteBuilder::digest(const QVariant& digest) {
-    note.digest = QString::fromStdString(boost::replace_all_copy(digest.toString().toStdString(), "\'\'", "\'"));
+    note.digest = HtmlSerializer::deserialize(digest.toString());
     return *this;
 }
 
