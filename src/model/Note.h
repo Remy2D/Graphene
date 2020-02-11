@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QObject>
+#include <QUuid>
 #include <boost/algorithm/string.hpp>
 
 struct Note {
@@ -12,7 +13,7 @@ struct Note {
 
     void update(const QString &html, const QString &plainText);
 
-    QString id;
+    QUuid id;
     QDateTime creationDate;
     QDateTime lastModifiedDate;
     QString content;

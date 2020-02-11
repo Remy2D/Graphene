@@ -7,7 +7,7 @@ Note::Note() : Note("", "") {
 }
 
 Note::Note(const QString &html, const QString &plainText) {
-    id = QUuid::createUuid().toString();
+    id = QUuid::createUuid();
     content = html;
     digest = Digest::digest(plainText);
 

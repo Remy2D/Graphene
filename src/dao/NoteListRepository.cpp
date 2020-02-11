@@ -96,7 +96,6 @@ QSqlQuery dao::NoteListRepository::execute(const QString &statement) {
     bool success = query.exec(statement);
 
     if (success) {
-        auto a = query.result();
         return query;
     } else {
         LOG_ERROR("Error executing query: " << statement.toStdString());

@@ -3,7 +3,9 @@
 
 #include <QString>
 #include <QDateTime>
+#include <QUuid>
 
+void bind(QString& string, const QUuid& time);
 void bind(QString& string, const QDateTime& time);
 void bind(QString& string, const QString& param);
 

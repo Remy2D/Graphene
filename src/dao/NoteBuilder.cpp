@@ -2,10 +2,9 @@
 #include "NoteBuilder.h"
 #include "model/Note.h"
 #include <QVariant>
-#include <QUuid>
 
 NoteBuilder &NoteBuilder::id(const QVariant& id) {
-    note.id=id.toUuid().toString(QUuid::StringFormat::WithBraces);
+    note.id=id.toUuid();
     return *this;
 }
 
