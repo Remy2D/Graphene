@@ -1087,7 +1087,7 @@
               </layout>
              </item>
              <item>
-              <widget class="QListView" name="noteListView">
+              <widget class="GrapheneListView" name="noteListView">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -2210,6 +2210,11 @@
    <class>GrapheneTextEdit</class>
    <extends>QTextEdit</extends>
    <header location="global">src/text/GrapheneTextEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GrapheneListView</class>
+   <extends>QListView</extends>
+   <header location="global">src/view/GrapheneListView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

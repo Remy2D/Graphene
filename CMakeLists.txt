@@ -50,6 +50,9 @@ set(SOURCE_FILES
     src/utils/Digest.h
     src/utils/Digest.cpp
 
+    src/view/GrapheneListView.h
+    src/view/GrapheneListView.cpp
+
     src/window/graphenewindow.cpp
     src/window/graphenewindow.h
 )

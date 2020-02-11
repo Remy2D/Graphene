@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 include(src/text/GrapheneTextEdit.pri)
+include(src/view/GrapheneListView.pri)
 
 CONFIG += c++11 designer plugin
 
@@ -146,6 +147,7 @@ DISTFILES += \
     CMakeLists.txt \
     CMakeLists.txt \
     src/text/GrapheneTextEdit.pri \
+    src/text/GrapheneListView.pri \
     resources/images/checked.png \
     resources/images/unchecked.png \
     CMakeLists.txt
