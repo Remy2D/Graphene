@@ -20,3 +20,7 @@ void Note::update(const QString &html, const QString &plainText) {
 
     lastModifiedDate = QDateTime::currentDateTime();
 }
+
+bool operator<(const Note &lhs, const Note &rhs) {
+    return lhs.lastModifiedDate < rhs.lastModifiedDate;
+}

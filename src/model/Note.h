@@ -9,6 +9,7 @@
 struct Note {
 
     Note();
+
     explicit Note(const QString &html, const QString &plainText);
 
     void update(const QString &html, const QString &plainText);
@@ -19,5 +20,7 @@ struct Note {
     QString content;
     QString digest;
 };
+
+bool operator<(const Note &lhs, const Note &rhs);
 
 #endif //GRAPHENE_NOTE_H

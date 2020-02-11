@@ -11,7 +11,7 @@ namespace dao {
     public:
         NoteListRepository();
 
-        std::list<Note> fetchNoteList();
+        QList<Note> fetchNoteList();
 
         void updateNote(const Note &note);
 

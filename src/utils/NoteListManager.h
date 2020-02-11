@@ -10,12 +10,14 @@
 class NoteListManager {
 public:
     explicit NoteListManager(NoteListModel* model, GrapheneTextEdit* textEdit, QListView* noteListView, dao::NoteListRepository& noteListRepository);
-    void saveNote(int oldIndex);
+    void addNote();
     void saveCurrentNote();
     void loadNote(int newIndex);
     void deleteCurrentNote();
+    void populateModel(QList<Note> notes);
 
 private:
+    void selectAnotherNote(int oldIndex);
     NoteListModel *noteListModel;
     QListView *noteListView;
     GrapheneTextEdit *textEdit;

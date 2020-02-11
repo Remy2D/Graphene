@@ -14,11 +14,17 @@ public:
 
     void rescheduleSaveEvent();
 
-    bool shouldFireSave();
+    bool isScheduled() const;
+
+    bool shouldFireAutosave();
+
+    void save();
 
     void autosave();
 
 private:
+    void doSave();
+
     bool scheduled = false;
     std::chrono::time_point<std::chrono::steady_clock> scheduledTime;
     std::chrono::milliseconds delaySeconds;

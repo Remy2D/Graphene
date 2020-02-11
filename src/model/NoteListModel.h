@@ -15,6 +15,8 @@ public:
 
     Note &getNote(int index);
 
+    Note &getCurrentNote();
+
     void setSelectedIndex(int index);
 
     int getSelectedIndex();
@@ -23,12 +25,13 @@ public:
 
     bool hasIndex(int index);
 
-    /// From QAbstractItemModel:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
 private:
+    void sortByLastModifiedDate();
+
     QList<Note> internalNoteList;
     int selectedIndex = 0;
 };

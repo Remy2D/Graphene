@@ -14,7 +14,7 @@ NoteBuilder &NoteBuilder::creationDate(const QVariant& creationDate) {
 }
 
 NoteBuilder &NoteBuilder::lastModifiedDate(const QVariant& lastModifiedDate) {
-    note.creationDate = QDateTime::fromSecsSinceEpoch(lastModifiedDate.toInt());
+    note.lastModifiedDate = QDateTime::fromSecsSinceEpoch(lastModifiedDate.toInt());
     return *this;
 }
 

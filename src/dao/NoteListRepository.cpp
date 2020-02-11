@@ -50,12 +50,12 @@ void dao::NoteListRepository::dbInitialized() {
     )");
 }
 
-std::list<Note> dao::NoteListRepository::fetchNoteList() {
+QList<Note> dao::NoteListRepository::fetchNoteList() {
     auto query = execute(R"(
         SELECT * FROM notes;
     )");
 
-    std::list<Note> list;
+    QList<Note> list;
     while (query.next()) {
         list.push_back(buildNote(query));
     }

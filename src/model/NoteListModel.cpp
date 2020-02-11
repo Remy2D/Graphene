@@ -7,6 +7,7 @@ int NoteListModel::addNote(Note &note) {
     int count = rowCount();
     beginInsertRows(QModelIndex(), internalNoteList.length(), internalNoteList.length());
     internalNoteList.append(note);
+    sortByLastModifiedDate();
     endInsertRows();
 
     return count;
@@ -22,6 +23,10 @@ Note &NoteListModel::getNote(int index) {
     return internalNoteList[index];
 }
 
+Note &NoteListModel::getCurrentNote() {
+    return getNote(selectedIndex);
+}
+
 int NoteListModel::getSelectedIndex() {
     return selectedIndex;
 }
@@ -30,7 +35,6 @@ void NoteListModel::setSelectedIndex(int index) {
     selectedIndex = index;
 }
 
-/// From QAbstractItemModel:
 int NoteListModel::rowCount(const QModelIndex &parent) const {
     Q_UNUSED(parent)
 
@@ -50,11 +54,16 @@ QVariant NoteListModel::data(const QModelIndex &index, int role) const {
 }
 
 void NoteListModel::resetModel() {
-    // todo: this emits a signal to QListView, find a better way to do this
     beginInsertRows(QModelIndex(), internalNoteList.length(), internalNoteList.length());
+    sortByLastModifiedDate();
+    setSelectedIndex(0);
     endInsertRows();
 }
 
 bool NoteListModel::hasIndex(int index) {
     return index >= 0 && index < rowCount();
+}
+
+void NoteListModel::sortByLastModifiedDate() {
+    std::sort(internalNoteList.begin(), internalNoteList.end(), qGreater<Note>());
 }

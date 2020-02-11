@@ -16,18 +16,29 @@ void timer::SaveEventHandler::rescheduleSaveEvent() {
     scheduledTime = Clock::now();
 }
 
-bool timer::SaveEventHandler::shouldFireSave() {
-    if (scheduled && scheduledTime + delaySeconds < Clock::now()) {
-        LOG_DEBUG("Autosave fired");
-        scheduled = false;
-        return true;
-    }
+bool timer::SaveEventHandler::shouldFireAutosave() {
+    return (scheduledTime + delaySeconds < Clock::now());
+}
 
-    return false;
+void timer::SaveEventHandler::doSave() {
+    noteListManager->saveCurrentNote();
+    scheduled = false;
+}
+
+void timer::SaveEventHandler::save() {
+    if (isScheduled()) {
+        LOG_DEBUG("Saving on demand");
+        doSave();
+    }
 }
 
 void timer::SaveEventHandler::autosave() {
-    if (shouldFireSave()) {
-        noteListManager->saveCurrentNote();
+    if (isScheduled() && shouldFireAutosave()) {
+        LOG_DEBUG("Autosave fired");
+        doSave();
     }
+}
+
+bool timer::SaveEventHandler::isScheduled() const {
+    return scheduled;
 }

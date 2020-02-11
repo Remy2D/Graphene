@@ -17,12 +17,7 @@ GrapheneWindow::GrapheneWindow(QWidget *parent) :
     noteListManager = new NoteListManager(noteListModel, ui->textEdit, ui->noteListView,
                                           noteListRepository);
 
-    for (auto note : noteListRepository.fetchNoteList()) {
-        noteListModel->addNote(note);
-    }
-
-    //todo: assure there is at least 1:
-    noteListManager->loadNote(0);
+    noteListManager->populateModel(noteListRepository.fetchNoteList());
 
     //Timers:
     saveEventHandler = new timer::SaveEventHandler(noteListManager);
@@ -57,16 +52,11 @@ void GrapheneWindow::onDeleteButtonPressed() {
 
 void GrapheneWindow::keyReleaseEvent(QKeyEvent *ev) {
     saveEventHandler->rescheduleSaveEvent();
-
     //todo: check letters, numbers, printables in general; backspaces
 }
 
 void GrapheneWindow::onAddNoteButtonPressed() {
-    //todo: switch note -> move somewhere
-    Note note;
-    noteListManager->saveNote(noteListModel->getSelectedIndex());
-    auto newIndex = noteListModel->addNote(note);
-    noteListManager->loadNote(newIndex);
+    noteListManager->addNote();
 
     ui->textEdit->clear();
     ui->textEdit->setFocus();
@@ -79,7 +69,7 @@ void GrapheneWindow::onCheckListButtonPressed() {
 }
 
 void GrapheneWindow::onViewNoteSelected(const QModelIndex &index) {
-    noteListManager->saveCurrentNote();
+    saveEventHandler->save();
     noteListManager->loadNote(index.row());
 }
 
